@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('single_flashcard_id');
             $table->foreignId('group_flashcard_id');
             $table->string('name');
-            $table->string('question');
+            $table->text('question');
             $table->text('answer');
             $table->timestamps();
         });

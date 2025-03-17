@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\RevisionTimeline;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class RevisionTaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'revision_timeline_id' => RevisionTimeline::inRandomOrder()->first()->revision_timeline_id,
+            'name' => fake()->firstName(),
+            'description' => fake()->text(),
+            'due'=> fake()->dateTime(),
+            'completed' => fake()->boolean(),
         ];
     }
 }

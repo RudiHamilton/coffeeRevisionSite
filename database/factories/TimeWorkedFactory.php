@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class TimeWorkedFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id'=> User::inRandomOrder()->first()->user_id,
+            'pomodoro_time' => fake()->time(),
+            'flashcard_time'=> fake()->time(),
+            'revision_time'=> fake()->time(),
+            'overall_time'=> fake()->time(),
         ];
     }
 }

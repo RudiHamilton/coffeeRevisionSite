@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GroupFlashcard;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class GroupFlashcardSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        GroupFlashcard::factory(10)->create(); 
     }
 }

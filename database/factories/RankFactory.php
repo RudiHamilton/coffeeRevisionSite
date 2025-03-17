@@ -17,7 +17,29 @@ class RankFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'rank'=>fake()->randomElement([
+                'Bronze',
+                'Silver',
+                'Gold',
+                'Platinum',
+                'Diamond',
+                'Master',
+                'Grandmaster',
+                'Eternus'
+            ]),
+
+            //This is placeholder till the coffeecup rank icons have been made.
+            //Will be swapped with file directories
+            'rank_icon'=>fake()->randomElement([
+                'Bronze',
+                'Silver',
+                'Gold',
+                'Platinum',
+                'Diamond',
+                'Master',
+                'Grandmaster',
+                'Eternus'
+            ]),
         ];
     }
 }
