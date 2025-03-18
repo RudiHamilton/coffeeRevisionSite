@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MMR;
+use App\Models\Rank;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LeaderboardController extends Controller
 {
@@ -11,7 +16,16 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        return view('leaderboard');
+        $userId = Auth::id();
+        $user = User::where('user_id',$userId)->first();
+
+        // $d = User::select('users.*')
+        //     ->join('m_m_r_s','m_m_r_s.user_id','=', 'user_id')
+        //     ->join('ranks','rank.mmr_id','=','mmr_id');
+        // dd($d);
+            
+        $users = User::with(['mmr.rank'])->get()->sortByDesc(fn($user)=>$user->mmr->mmr_number ?? 0);
+        return view('leaderboard',compact('users'));
     }
 
     /**

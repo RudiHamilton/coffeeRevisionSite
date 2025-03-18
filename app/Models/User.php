@@ -52,4 +52,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    public function mmr(){
+        return $this->hasOne(MMR::class,'user_id');
+    }
 }

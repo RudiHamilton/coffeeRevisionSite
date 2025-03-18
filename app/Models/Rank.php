@@ -13,5 +13,11 @@ class Rank extends Model
     protected $fillable = [
         'rank',
         'rank_icon',
+        'mmr_range_start',
+        'mmr_range_end',
     ];
+    public function mmr() 
+    {
+        return $this->hasMany(MMR::class);
+    }
 }

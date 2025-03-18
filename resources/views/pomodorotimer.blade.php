@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="container">
                 <h1>Coffee Cup Pomodoro Timer</h1>
-                <h2>Welcome to my focus timer. This coffee cup will empty in 25 minutes! After that you're free to do whatever for 5 minutes!</h2>
+                <h2>Welcome to the focus timer. This coffee cup will empty in 25 minutes! After that you're free to do whatever for 5 minutes!</h2>
                 <br>
                 <div class="inputs">
                     <button class="btn" id="startbtn">Start</button>

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id('rank_id');
             $table->string('rank');
             $table->string('rank_icon');
+            $table->integer('rank_range_start');
+            $table->integer('rank_range_end');
             $table->timestamps();
         });
     }

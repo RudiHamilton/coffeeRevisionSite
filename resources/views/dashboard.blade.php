@@ -4,6 +4,7 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
+    @can('role control')
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -11,6 +12,11 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                 </div>
+                <a href="{{url('roles')}}"class="btn btn-xs btn-info pull-right m-3">View Roles</a>
+                @endcan
+                @can('permission control')
+                    <a href="{{url('permissions')}}" class="btn btn-xs btn-info pull-right m-3">View Permissions</a>
+                @endcan
             </div>
         </div>
     </div>

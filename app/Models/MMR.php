@@ -17,4 +17,12 @@ class MMR extends Model
         'user_id', 
         'mmr_number',
     ];
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function rank()
+    {
+        return $this->belongsTo(Rank::class,'rank_id');
+    }
 }
