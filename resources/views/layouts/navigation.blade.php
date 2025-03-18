@@ -12,6 +12,21 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('leaderboard.index')" :active="request()->routeIs('leaderboard.index')">
+                        {{ __('Leaderboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('pomodoro.index')" :active="request()->routeIs('pomodoro.index')">
+                        {{ __('Pomodoro Timer') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('revisiontimeline.index')" :active="request()->routeIs('revisiontimeline.index')">
+                        {{ __('Revision Timeline') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('flashcards.index')" :active="request()->routeIs('flashcards.index')">
+                        {{ __('Flashcards') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
