@@ -21,7 +21,7 @@ class MMRFactory extends Factory
         return [
             'rank_id' => Rank::inRandomOrder()->first()->rank_id,
             'user_id' => User::inRandomOrder()->first()->user_id,
-            'mmr_number' => fake()->randomNumber(4,false),
+            'mmr_number' => fake()->randomNumber(3,false),
         ];
     }
 }

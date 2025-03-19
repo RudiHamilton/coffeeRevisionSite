@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RevisionTask;
+use App\Models\RevisionTimeline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RevisionTimelineController extends Controller
 {
@@ -11,7 +14,14 @@ class RevisionTimelineController extends Controller
      */
     public function index()
     {
-        return view('revisiontimeline');
+        $events = [];
+
+        $userId= Auth::id();
+        $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id');
+
+        $revisionTasks = RevisionTask::where('revision_timeline_id',$revisionTimeline)->pluck('revision_task_id');
+        $collectRevisionTasks = RevisionTask::where('revision_task_id',$revisionTasks)->get();
+        return view('revisiontimeline',compact($revisionTasks));
     }
 
     /**

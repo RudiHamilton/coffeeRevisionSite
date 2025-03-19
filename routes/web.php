@@ -10,8 +10,8 @@ use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 Route::resource('leaderboard', controller: LeaderboardController::class)->middleware(['auth', 'verified']);
 Route::resource('pomodoro', controller: PomodoroController::class)->middleware(['auth', 'verified']);
@@ -22,9 +22,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('home');
+// Route::get('/home', function () {
+//     return view('home');
+// })->name('home');
 
 Route::get('permissions/{id}/delete',[PermissionController::class,'destroy'])->middleware('role:super-admin');
 Route::resource('permissions', PermissionController::class)->middleware('role:super-admin');
@@ -32,8 +32,8 @@ Route::resource('permissions', PermissionController::class)->middleware('role:su
 Route::get('roles/{id}/delete',[RoleController::class,'destroy'])->middleware('role:super-admin');
 Route::resource('roles', RoleController::class)->middleware('role:super-admin');
 
-Route::get('roles/{roleid}/addpermission',[RoleController::class,'addPermissionToRole']);
-Route::put('roles/{roleid}/addpermission',[RoleController::class,'givePermissionToRole']);
+Route::get('roles/{roleid}/addpermission',[RoleController::class,'addPermissionToRole'])->middleware('role:super-admin');
+Route::put('roles/{roleid}/addpermission',[RoleController::class,'givePermissionToRole'])->middleware('role:super-admin');
 
 
 Route::middleware('auth')->group(function () {

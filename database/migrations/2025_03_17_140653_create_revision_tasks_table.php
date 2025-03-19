@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('revision_timeline_id');
             $table->string('name');
             $table->text('description');
-            $table->dateTime('due');
+            $table->dateTime('start_time');
+            $table->dateTime('finish_time');
             $table->boolean('completed');
             $table->timestamps();
         });

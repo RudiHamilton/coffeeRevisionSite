@@ -15,7 +15,12 @@ class RevisionTask extends Model
         'revision_timeline_id',
         'name',
         'description',
-        'due',
+        'start_time',
+        'finish_time',
         'completed',
     ];
+    public function revisiontimeline()
+    {
+        return $this->belongsTo(RevisionTimeline::class);
+    }
 }

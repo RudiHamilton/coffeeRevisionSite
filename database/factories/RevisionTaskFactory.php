@@ -21,7 +21,8 @@ class RevisionTaskFactory extends Factory
             'revision_timeline_id' => RevisionTimeline::inRandomOrder()->first()->revision_timeline_id,
             'name' => fake()->firstName(),
             'description' => fake()->text(),
-            'due'=> fake()->dateTime(),
+            'start_time'=> fake()->dateTime(),
+            'finish_time'=> fake()->dateTime(),
             'completed' => fake()->boolean(),
         ];
     }

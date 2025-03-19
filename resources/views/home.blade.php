@@ -4,4 +4,11 @@
             {{ __('Home') }}
         </h2>
     </x-slot>
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+    
+    </div>
+
 </x-app-layout>

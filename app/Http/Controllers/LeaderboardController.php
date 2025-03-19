@@ -16,16 +16,48 @@ class LeaderboardController extends Controller
      */
     public function index()
     {
-        $userId = Auth::id();
-        $user = User::where('user_id',$userId)->first();
+        // $userId = Auth::id();
+        // $user = User::where('user_id',$userId)->first();
 
-        // $d = User::select('users.*')
-        //     ->join('m_m_r_s','m_m_r_s.user_id','=', 'user_id')
-        //     ->join('ranks','rank.mmr_id','=','mmr_id');
-        // dd($d);
+        // // $d = User::select('users.*')
+        // //     ->join('m_m_r_s','m_m_r_s.user_id','=', 'user_id')
+        // //     ->join('ranks','rank.mmr_id','=','mmr_id');
+        // // dd($d);
             
-        $users = User::with(['mmr.rank'])->get()->sortByDesc(fn($user)=>$user->mmr->mmr_number ?? 0);
-        return view('leaderboard',compact('users'));
+        // $users = User::with(['mmr.rank'])->get()->sortByDesc(fn($user)=>$user->mmr->mmr_number ?? 0);
+        // return view('leaderboard',compact('users'));
+
+        $userId = Auth::id();
+
+        $userMmr = Mmr::where('user_id', $userId)->first();
+
+        if (!$userMmr) {
+            return redirect()->back()->with('error', 'You have no MMR record.');
+        }
+
+        // gets users rank range
+        $userRank = Rank::where('rank_range_start', '<=', $userMmr->mmr_number)
+                        ->where('rank_range_end', '>=', $userMmr->mmr_number)
+                        ->first();
+
+        //if user rank null returns this.
+        if (!$userRank) {
+
+            
+            return redirect()->back()->with('error', 'No rank found for your MMR .');
+        }
+
+        // Get users in the same rank range, ordered by MMR descending
+        $users = User::with(['mmr.rank'])
+            ->whereHas('mmr', function ($query) use ($userRank) {
+                $query->whereBetween('mmr_number', [$userRank->rank_range_start, $userRank->rank_range_end]);
+            })
+            ->join('m_m_r_s', 'm_m_r_s.user_id', '=', 'users.user_id')
+            ->orderByDesc('m_m_r_s.mmr_number')
+            ->select('users.*', 'm_m_r_s.mmr_number') // Select necessary fields
+            ->get();
+
+        return view('leaderboard', compact('users', 'userRank'));
     }
 
     /**
