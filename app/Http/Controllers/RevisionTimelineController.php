@@ -17,11 +17,27 @@ class RevisionTimelineController extends Controller
         $events = [];
 
         $userId= Auth::id();
+     
         $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id');
-
-        $revisionTasks = RevisionTask::where('revision_timeline_id',$revisionTimeline)->pluck('revision_task_id');
-        $collectRevisionTasks = RevisionTask::where('revision_task_id',$revisionTasks)->get();
-        return view('revisiontimeline',compact($revisionTasks));
+        if(!empty($revisionTimeline)){
+            $revisionTasks = RevisionTask::where('revision_timeline_id',$revisionTimeline)->pluck('revision_task_id');
+            $collectRevisionTasks = RevisionTask::where('revision_task_id',$revisionTasks)->get();
+            foreach ($collectRevisionTasks as $task) {
+                $events[] = [
+                    'title' => $task->name,
+                    'desc' => $task->description,
+                    'start' => $task->start_time,
+                    'end' => $task->finish_time,
+                ];
+            }
+            //dd($events);
+            return view('revisiontimeline.index',compact('events'));
+        }
+        else{
+            return view('revisiontimeline.index',data: compact('events'));
+        }
+        
+        
     }
 
     /**
@@ -29,7 +45,7 @@ class RevisionTimelineController extends Controller
      */
     public function create()
     {
-        //
+        return view('revisiontimeline.create');        
     }
 
     /**
@@ -37,7 +53,34 @@ class RevisionTimelineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userId= Auth::id();
+        $user=Auth::user();
+        $revisionTimelineId = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id');
+        if(!empty($revisionTimelineId)){
+            RevisionTask::create([
+                'revision_timeline_id' => $revisionTimelineId,
+                'name'=> $request->name,
+                'description'=> $request->description,
+                'start_time'=>$request->start_time,
+                'finish_time'=>$request->finish_time,
+                'completed'=>'f',
+            ]);
+        }else{
+            RevisionTimeline::create([
+                'user_id'=>$userId,
+                'name'=>$user->first_name,
+            ]);
+            $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toarray();
+            $revisionTimeline = array_pop($revisionTimeline);
+            RevisionTask::create([
+                'revision_timeline_id' => $revisionTimeline,
+                'name'=> $request->name,
+                'description'=> $request->description,
+                'start_time'=>$request->start_time,
+                'finish_time'=>$request->finish_time,
+                'completed'=>'f',
+            ]);
+        }
     }
 
     /**

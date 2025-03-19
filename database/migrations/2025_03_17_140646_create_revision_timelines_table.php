@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id('revision_timeline_id');
             $table->foreignId('user_id');
             $table->string('name');
-            $table->string('description');
             $table->timestamps();
         });
     }

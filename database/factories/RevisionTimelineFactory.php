@@ -20,7 +20,6 @@ class RevisionTimelineFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->user_id,
             'name'=> fake()->firstName(),
-            'description'=> fake()->text(),
         ];
     }
 }

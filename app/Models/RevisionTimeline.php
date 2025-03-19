@@ -13,7 +13,6 @@ class RevisionTimeline extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'description',
     ];
     public function user()
     {
