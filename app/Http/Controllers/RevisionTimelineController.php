@@ -18,10 +18,13 @@ class RevisionTimelineController extends Controller
 
         $userId= Auth::id();
      
-        $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id');
+        $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
+        $revisionTimeline = array_pop($revisionTimeline);
+
         if(!empty($revisionTimeline)){
-            $revisionTasks = RevisionTask::where('revision_timeline_id',$revisionTimeline)->pluck('revision_task_id');
-            $collectRevisionTasks = RevisionTask::where('revision_task_id',$revisionTasks)->get();
+            $revisionTasks = RevisionTask::where('revision_timeline_id',$revisionTimeline)->get('revision_task_id')->toArray();
+            $collectRevisionTasks = RevisionTask::whereIn('revision_task_id',$revisionTasks)->get();
+            
             foreach ($collectRevisionTasks as $task) {
                 $events[] = [
                     'title' => $task->name,
@@ -30,14 +33,11 @@ class RevisionTimelineController extends Controller
                     'end' => $task->finish_time,
                 ];
             }
-            //dd($events);
             return view('revisiontimeline.index',compact('events'));
         }
-        else{
+        elseif(empty($revisionTimeline)){
             return view('revisiontimeline.index',data: compact('events'));
         }
-        
-        
     }
 
     /**
@@ -46,7 +46,7 @@ class RevisionTimelineController extends Controller
     public function create()
     {
         return view('revisiontimeline.create');        
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -55,22 +55,24 @@ class RevisionTimelineController extends Controller
     {
         $userId= Auth::id();
         $user=Auth::user();
-        $revisionTimelineId = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id');
-        if(!empty($revisionTimelineId)){
+        $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
+        $revisionTimeline = array_pop($revisionTimeline);
+        if(!empty($revisionTimeline)){
             RevisionTask::create([
-                'revision_timeline_id' => $revisionTimelineId,
+                'revision_timeline_id' => $revisionTimeline,
                 'name'=> $request->name,
                 'description'=> $request->description,
                 'start_time'=>$request->start_time,
                 'finish_time'=>$request->finish_time,
                 'completed'=>'f',
             ]);
-        }else{
+            return redirect('revisiontimeline')->with('success','Task added successfully');
+        }elseif(empty($revisionTimeline)){
             RevisionTimeline::create([
                 'user_id'=>$userId,
                 'name'=>$user->first_name,
             ]);
-            $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toarray();
+            $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
             $revisionTimeline = array_pop($revisionTimeline);
             RevisionTask::create([
                 'revision_timeline_id' => $revisionTimeline,
@@ -80,6 +82,8 @@ class RevisionTimelineController extends Controller
                 'finish_time'=>$request->finish_time,
                 'completed'=>'f',
             ]);
+            
+            return redirect('revisiontimeline')->with('success','Task added successfully');
         }
     }
 
