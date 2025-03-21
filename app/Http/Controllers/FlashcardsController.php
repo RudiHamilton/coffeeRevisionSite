@@ -25,6 +25,7 @@ class FlashcardsController extends Controller
             UserFlashcard::create([
                 'user_id'=> $userId,
             ]);
+
             $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             })->get();
@@ -39,9 +40,9 @@ class FlashcardsController extends Controller
     {
         return view('flashcards.createflashcardgroup');
     }
-    public function createflashcardsingle()
-    {
-        return view('flashcards.createflashcardsingle');
+    public function createflashcardsingle($groupFlashcardId)
+    {   
+        return view('flashcards.createflashcardsingle',compact('groupFlashcardId'));
     }
 
     /**
@@ -59,9 +60,24 @@ class FlashcardsController extends Controller
         ];
         GroupFlashcard::create($request);
 
-        return redirect()->route('flashcards.index')->with('success','Created Successfully');
-    }
-
+        return redirect()->route('flashcards.index')->with('success','Created Successfully');    
+    }    
+    public function storeSingle($groupFlashcardId,Request $request)
+    {
+        $request = [
+        'group_flashcard_id'=>$groupFlashcardId,
+        'name'=> $request->name,
+        'question'=> $request->question,
+        'answer'=> $request->answer,
+        ];
+        SingleFlashcard::create($request);
+        $singleFlashcards =  SingleFlashcard::whereHas('groupFlashcard', function ($query) use ($groupFlashcardId) {
+            $query->where('group_flashcard_id', $groupFlashcardId);
+        })->get();
+        $groupFlashcardName = GroupFlashcard::find($groupFlashcardId)->name;
+        $findingGroupFlashcardId = GroupFlashcard::find($groupFlashcardId)->group_flashcard_id;
+        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId'))->with('success','Created Successfully');    
+    }    
     /**
      * Display the specified resource.
      */
@@ -70,10 +86,9 @@ class FlashcardsController extends Controller
         $singleFlashcards =  SingleFlashcard::whereHas('groupFlashcard', function ($query) use ($group_flashcard_id) {
             $query->where('group_flashcard_id', $group_flashcard_id);
         })->get();
-        // $group_flashcard = GroupFlashcard::find($group_flashcard_id);
         $groupFlashcardName = GroupFlashcard::find($group_flashcard_id)->name;
-        // $single_flashcards = SingleFlashcard::where('group_flashcard_id',$group_flashcard_id)->get();
-        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName'));
+        $findingGroupFlashcardId = GroupFlashcard::find($group_flashcard_id)->group_flashcard_id;
+        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId'));
     }
 
     /**

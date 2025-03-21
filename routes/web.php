@@ -13,13 +13,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('flashcards/show/{single_flashcards_id}',[FlashcardsController::class,'show']);
+Route::get('flashcards/show/{single_flashcards_id}',[FlashcardsController::class,'show'])->name('showsingleflashcards');
 
 Route::get('flashcards/groupflashcards/create',[FlashcardsController::class,'createflashcardgroup']);
-Route::get('flashcards/singleflashcards/create',[FlashcardsController::class,'createflashcardsingle']);
+Route::get('flashcards/singleflashcards/create/{group_flashcard_id}',[FlashcardsController::class,'createflashcardsingle'])->name('createflashcardsingle');
 
 Route::post('createflashcardgroup/store',[FlashcardsController::class,'storeGroup'])->name('storeGroup');
-Route::post('createflashcardsingle/store',[FlashcardsController::class,'storeSingle'])->name('storeSingle');
+Route::post('createflashcardsingle/store/{group_flashcard_id}',[FlashcardsController::class,'storeSingle'])->name('storeSingle');
 
 Route::resource('leaderboard', controller: LeaderboardController::class)->middleware(['auth', 'verified']);
 Route::resource('pomodoro', controller: PomodoroController::class)->middleware(['auth', 'verified']);
