@@ -18,4 +18,8 @@ class SingleFlashcard extends Model
         'question',
         'answer',
     ];
+    public function groupFlashcard()
+    {
+        return $this->belongsTo(GroupFlashcard::class, 'group_flashcard_id', 'group_flashcard_id');
+    }
 }

@@ -20,7 +20,6 @@ class UserFlashcardFactory extends Factory
     {
         return [
             'user_id' => User::inRandomOrder()->first()->user_id,
-            'group_flashcard_id'=> GroupFlashcard::inRandomOrder()->first()->group_flashcard_id,
         ];
     }
 }

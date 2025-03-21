@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\UserFlashcard;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class GroupFlashcardFactory extends Factory
     public function definition(): array
     {
         return [
+            'user_flashcard_id'=> UserFlashcard::inRandomOrder()->first()->user_flashcard_id,
             'name' => fake()->firstName(),
             'description' => fake()->text(),
         ];

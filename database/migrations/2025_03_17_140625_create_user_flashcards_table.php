@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('user_flashcards', function (Blueprint $table) {
             $table->id('user_flashcard_id');
             $table->foreignId('user_id');
-            $table->foreignId('group_flashcard_id');
             $table->timestamps();
         });
     }

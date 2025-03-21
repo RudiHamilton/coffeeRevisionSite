@@ -14,6 +14,9 @@ class UserFlashcard extends Model
 
     protected $fillable = [
         'user_id',
-        'group_flashcard_id',
     ];
+    public function groupFlashcards()
+    {
+        return $this->hasMany(GroupFlashcard::class, 'user_flashcard_id', 'user_flashcard_id');
+    }
 }
