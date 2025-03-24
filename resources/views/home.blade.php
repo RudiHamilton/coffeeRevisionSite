@@ -1,9 +1,10 @@
 <x-app-layout>
     <link href="{{asset('css/layout.css')}}" rel="stylesheet" />
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Home') }}
-        </h2>
+    <div name="header" class="row">
+        <div class="col"> <h2 class="mt-2 *:font-semibold text-xl text-gray-800 leading-tight">{{ __('Home') }}</h2></div>
+        <div class="col"> <x-search-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"/> </div>
+    </div>
     </x-slot>
     <div class="card-body">
         <h1>Study with passion. You can brew it!</h1>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRevisionTimetableRequest;
 use App\Models\RevisionTask;
 use App\Models\RevisionTimeline;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class RevisionTimelineController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRevisionTimetableRequest $request)
     {
         $userId= Auth::id();
         $user=Auth::user();
@@ -65,14 +66,11 @@ class RevisionTimelineController extends Controller
             $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
             $revisionTimeline = array_pop($revisionTimeline);
         }
-        RevisionTask::create([
+        $validated = $request->validated();
+        RevisionTask::create(array_merge($validated, [
             'revision_timeline_id' => $revisionTimeline,
-            'name'=> $request->name,
-            'description'=> $request->description,
-            'start_time'=>$request->start_time,
-            'finish_time'=>$request->finish_time,
             'completed'=>'f',
-        ]);
+        ]));
         return redirect('revisiontimeline')->with('success','Task added successfully');
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGroupFlashcardRequest;
+use App\Http\Requests\StoreSingleFlashcardRequest;
 use App\Models\GroupFlashcard;
 use App\Models\SingleFlashcard;
 use App\Models\UserFlashcard;
@@ -46,31 +48,24 @@ class FlashcardsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function storeGroup(Request $request)
+    public function storeGroup(StoreGroupFlashcardRequest $request)
     {
         $userId = Auth::id();
         $userFlashcardId = UserFlashcard::where('user_id',$userId)->value('user_flashcard_id');
+        $validated = $request->validated();
         
-        $request = [
-        'user_flashcard_id'=>$userFlashcardId,
-        'name'=> $request->name,
-        'description'=> $request->description,
-        ];
-        GroupFlashcard::create($request);
+        GroupFlashcard::create(array_merge($validated, [
+            'user_flashcard_id' => $userFlashcardId,
+        ]));
 
         return redirect()->route('flashcards.index')->with('success','Created Successfully');    
     }    
-    public function storeSingle($groupFlashcardId,Request $request)
+    public function storeSingle($groupFlashcardId,StoreSingleFlashcardRequest $request)
     {
-        $request = [
-        'group_flashcard_id'=>$groupFlashcardId,
-        'name'=> $request->name,
-        'question'=> $request->question,
-        'answer'=> $request->answer,
-        ];
-        SingleFlashcard::create($request);
-
-        //$flashcard = SingleFlashcard::find($single_flashcard_id);
+        $validated = $request->validated();
+        SingleFlashcard::create(array_merge($validated, [
+            'group_flashcard_id' => $groupFlashcardId,
+        ]));
         return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
     }    
     /**
@@ -106,25 +101,18 @@ class FlashcardsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateGroup(Request $request,$group_flashcard_id)
+    public function updateGroup(StoreGroupFlashcardRequest $request,$group_flashcard_id)
     {
         $groupFlashcard = GroupFlashcard::find($group_flashcard_id);
-        $request = [
-            'name'=> $request->name,
-            'description' =>$request->description,
-        ];
-        $groupFlashcard->update($request);
+        $validated = $request->validated();
+        $groupFlashcard->update($validated);
         return redirect()->route('flashcards.index')->with('success','Flashcard Group Updated Successfully.');
     }
-    public function updateSingle(Request $request,$single_flashcard_id){
+    public function updateSingle(StoreSingleFlashcardRequest $request,$single_flashcard_id)
+    {
         $singleFlashcard = SingleFlashcard::find($single_flashcard_id);
-        $request = [
-            'name'=> $request->name,
-            'question' =>$request->question,
-            'answer'=>$request->answer,
-
-        ];
-        $singleFlashcard->update($request);
+        $validated = $request->validated();
+        $singleFlashcard->update($validated);
         $groupFlashcardId = SingleFLashcard::where('single_flashcard_id',$single_flashcard_id)->value('group_flashcard_id');
         return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
     }

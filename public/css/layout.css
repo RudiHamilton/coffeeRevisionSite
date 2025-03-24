@@ -54,7 +54,13 @@ main{
     background-color:#d29049;
     border-color:#d29049;
 }
+.row {
+    display: flex;
+}
 
+.col {
+    flex: 1;
+}
 .signupbtn{
     width:200px;
     height:100px;
