@@ -11,7 +11,7 @@
             <p>Join us today and compete against colleagues, classmates and friends to see who can become the best at learning. Its no easy feat, but with BrainBrew we'd love to help!</p>
         </div>
         <div class="register-button">
-            <a href="{{route('register')}}" class="btn btn-dark">Sign up for free</a>
+            <a href="{{route('register')}}" class="signupbtn">Sign up for free</a>
         </div>
     </div>
     <div class="study-items">

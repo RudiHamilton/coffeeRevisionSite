@@ -22,7 +22,15 @@
     transition:transform 1000ms;
     transform-style: preserve-3d; 
 }
-
+.btn{
+    background-color:#F1D2B1;
+    border-color:#F1D2B1;
+    color: black;
+}
+.btn:hover{
+    background-color:#d29049;
+    border-color:#d29049;
+}
 
 
 .back, 

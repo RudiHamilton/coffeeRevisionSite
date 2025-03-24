@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create Revision Task') }}
-            <a style="background-color: #2C3E50 !important;"class="btn btn-dark float-end ml-2" href="{{route('revisiontimeline.index')}}"><-Back</a>
+            <a style="!important;"class="btn float-end ml-2" href="{{route('revisiontimeline.index')}}"><-Back</a>
         </h2>
     </x-slot>
     <div class="card-body m-10">

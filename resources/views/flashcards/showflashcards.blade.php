@@ -5,8 +5,8 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             You are viewing the flashcard group: {{ __($groupFlashcardName) }}
-            <a  style="margin-left: 10px;"class="btn btn-dark float-end"  href="{{ route('createflashcardsingle',$findingGroupFlashcardId)}}">Create Single Flashcard +</a>
-            <a  style="margin-left:5px"class="btn btn-dark float-end" href="{{route('flashcards.index')}}">Back</a>
+            <a  style="margin-left: 10px;"class="btn float-end"  href="{{ route('createflashcardsingle',$findingGroupFlashcardId)}}">Create Single Flashcard +</a>
+            <a  style="margin-left:5px"class="btn float-end" href="{{route('flashcards.index')}}">Back</a>
         </h2>
         
     </x-slot>
@@ -23,9 +23,8 @@
                         <div class="back">
                             Answer: {{$singleFlashcard->answer}}
                             <div class="buttons" style="position:absolute;">
-                                <a href="{{url('flashcards/singleflashcard/'.$singleFlashcard->single_flashcard_id.'/edit')}}" style="background-color: #2C3E50 !important; height: 40px; position:bottom;" class="btn btn-dark float m-2">Edit</a>
-                                <a href="{{url('flashcards/'.$singleFlashcard->single_flashcard_id.'/delete')}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">Delete</a>
-                                
+                                <a href="{{url('flashcards/singleflashcard/'.$singleFlashcard->single_flashcard_id.'/edit')}}" style=" !important; height: 40px; position:bottom;" class="btn float m-2">Edit</a>
+                                <a href="{{url('flashcards/'.$singleFlashcard->single_flashcard_id.'/delete')}}" style="!important; height: 40px;" class="btn float m-2">Delete</a>
                             </div>
                             </p>
                         </div>

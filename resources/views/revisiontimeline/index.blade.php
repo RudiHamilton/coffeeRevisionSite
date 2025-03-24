@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Revision Timeline') }}
@@ -13,7 +14,7 @@
             @endif
         </p>
         <br>
-        <a style="background-color: #2C3E50 !important; margin-left: 10px; height: 40px;" class="btn btn-dark float-end" href="{{route('revisiontimeline.create')}}">Create +</a>
+        <a style="!important; margin-left: 10px; height: 40px;" class="btn float-end" href="{{route('revisiontimeline.create')}}">Create +</a>
         <div id="calendar"></div>
     </div>
     @push('scripts')
@@ -21,6 +22,10 @@
         <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet" />
+        <style>
+            .fc .fc-button-primary {     color: black;     background-color: #F1D2B1 !important;     border-color: #F1D2B1 !important; }
+            .fc .fc-button-primary:hover {     color: black;     background-color: #d29049 !important;     border-color: #d29049 !important; }
+        </style>
         <script> 
             document.addEventListener('DOMContentLoaded', function () {
                 var calendarEl = document.getElementById('calendar');
@@ -29,6 +34,7 @@
                     slotMinTime: '5:00:00',
                     slotMaxTime: '23:00:00',
                     events: @json($events),
+                    eventColor:'#F1D2B1',eventTextColor:'black',eventButtonColor:'#F1D2B1',
                 });
                 calendar.render();
             });
