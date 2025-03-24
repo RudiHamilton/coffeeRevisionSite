@@ -17,19 +17,17 @@ class FlashcardsController extends Controller
     {
         $userId = Auth::id();
         $userFlashcardId = UserFlashcard::where("user_id",$userId)->value('user_flashcard_id');
-        if(!empty($userFlashcardId)){
-            $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })->get();
-        }elseif(empty($userFlashcardId)){
+
+        if(empty($userFlashcardId)){
             UserFlashcard::create([
                 'user_id'=> $userId,
             ]);
-
-            $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })->get();
         }
+
+        $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->get();
+        
         return view('flashcards.viewgroupflashcards', compact('groupFlashcards'));
     }
 
@@ -71,12 +69,9 @@ class FlashcardsController extends Controller
         'answer'=> $request->answer,
         ];
         SingleFlashcard::create($request);
-        $singleFlashcards =  SingleFlashcard::whereHas('groupFlashcard', function ($query) use ($groupFlashcardId) {
-            $query->where('group_flashcard_id', $groupFlashcardId);
-        })->get();
-        $groupFlashcardName = GroupFlashcard::find($groupFlashcardId)->name;
-        $findingGroupFlashcardId = GroupFlashcard::find($groupFlashcardId)->group_flashcard_id;
-        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId'))->with('success','Created Successfully');    
+
+        //$flashcard = SingleFlashcard::find($single_flashcard_id);
+        return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
     }    
     /**
      * Display the specified resource.
@@ -88,13 +83,19 @@ class FlashcardsController extends Controller
         })->get();
         $groupFlashcardName = GroupFlashcard::find($group_flashcard_id)->name;
         $findingGroupFlashcardId = GroupFlashcard::find($group_flashcard_id)->group_flashcard_id;
+
+        
         return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function editGroup(string $id)
+    {
+        //
+    }
+    public function editSingle(string $id)
     {
         //
     }
@@ -102,17 +103,28 @@ class FlashcardsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateGroup(Request $request, string $id)
     {
         //
     }
+    public function updateSingle(Request $requestm,string $id){
+
+    }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroyGroup($single_flashcard_id)
     {
-        //
+
+    }
+    public function destroySingle($single_flashcard_id)
+    {
+        $flashcard = SingleFlashcard::find($single_flashcard_id);
+        $groupFlashcardId = SingleFLashcard::where('single_flashcard_id',$single_flashcard_id)->value('group_flashcard_id');
+        $flashcard->delete();
+        return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
     }
 }
 

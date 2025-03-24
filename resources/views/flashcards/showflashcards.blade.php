@@ -11,21 +11,29 @@
         
     </x-slot>
     <div class="card-body mt-5">
-
-        @forelse ($singleFlashcards as $singleFlashcard)
-            <div class="container">
-                <x-single-flashcards>
-                    <div class="front">
-                        <h4 class="h4 m-2">{{$singleFlashcard->name}}</h4><p class="m-2">
-                        Question: <br>{{$singleFlashcard->question}} 
-                    </div>
-                    <div class="back">
-                        Answer: {{$singleFlashcard->answer}} </p>
-                    </div>
-                </x-single-flashcards>
-            </div>
-        @empty
-            <h1 class="m-3">You have no flashcards for this group. Why dont you try creating some!</h1><br><br><br>
-        @endforelse  
+        <div class="flashcard-container">
+            @forelse ($singleFlashcards as $singleFlashcard)
+                <div class="container">
+                    <x-single-flashcards>
+                        <div class="front">
+                            <h4 class="h4 m-2">{{$singleFlashcard->name}}</h4>
+                            <p class="m-2">
+                            Question: <br>{{$singleFlashcard->question}} 
+                        </div>
+                        <div class="back">
+                            Answer: {{$singleFlashcard->answer}}
+                            <div class="buttons" style="position:absolute;">
+                                {{-- <a href="{{route('')}}" style="background-color: #2C3E50 !important; height: 40px; position:bottom;" class="btn btn-dark float m-2">Edit</a> --}}
+                                <a href="{{url('flashcards/'.$singleFlashcard->single_flashcard_id.'/delete')}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">Delete</a>
+    
+                            </div>
+                            </p>
+                        </div>
+                    </x-single-flashcards>
+                </div>
+            @empty
+                <h1 class="m-3">You have no flashcards for this group. Why dont you try creating some!</h1><br><br><br>
+            @endforelse  
+        </div>
     </div>
 </x-app-layout>

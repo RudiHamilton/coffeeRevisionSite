@@ -57,34 +57,23 @@ class RevisionTimelineController extends Controller
         $user=Auth::user();
         $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
         $revisionTimeline = array_pop($revisionTimeline);
-        if(!empty($revisionTimeline)){
-            RevisionTask::create([
-                'revision_timeline_id' => $revisionTimeline,
-                'name'=> $request->name,
-                'description'=> $request->description,
-                'start_time'=>$request->start_time,
-                'finish_time'=>$request->finish_time,
-                'completed'=>'f',
-            ]);
-            return redirect('revisiontimeline')->with('success','Task added successfully');
-        }elseif(empty($revisionTimeline)){
+        if(empty($revisionTimeline)){
             RevisionTimeline::create([
                 'user_id'=>$userId,
                 'name'=>$user->first_name,
             ]);
             $revisionTimeline = RevisionTimeline::where('user_id', $userId)->pluck('revision_timeline_id')->toArray();
             $revisionTimeline = array_pop($revisionTimeline);
-            RevisionTask::create([
-                'revision_timeline_id' => $revisionTimeline,
-                'name'=> $request->name,
-                'description'=> $request->description,
-                'start_time'=>$request->start_time,
-                'finish_time'=>$request->finish_time,
-                'completed'=>'f',
-            ]);
-            
-            return redirect('revisiontimeline')->with('success','Task added successfully');
         }
+        RevisionTask::create([
+            'revision_timeline_id' => $revisionTimeline,
+            'name'=> $request->name,
+            'description'=> $request->description,
+            'start_time'=>$request->start_time,
+            'finish_time'=>$request->finish_time,
+            'completed'=>'f',
+        ]);
+        return redirect('revisiontimeline')->with('success','Task added successfully');
     }
 
     /**

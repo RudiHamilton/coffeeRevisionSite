@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
-
+Route::get('flashcards/{single_flashcard_id}/delete',[FlashcardsController::class,'destroySingle']);
 Route::get('flashcards/show/{single_flashcards_id}',[FlashcardsController::class,'show'])->name('showsingleflashcards');
 
 Route::get('flashcards/groupflashcards/create',[FlashcardsController::class,'createflashcardgroup']);
