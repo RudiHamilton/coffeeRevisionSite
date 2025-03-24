@@ -21,6 +21,7 @@ class GroupFlashcardFactory extends Factory
             'user_flashcard_id'=> UserFlashcard::inRandomOrder()->first()->user_flashcard_id,
             'name' => fake()->firstName(),
             'description' => fake()->text(),
+            'visibility' => fake()->boolean(),
         ];
     }
 }

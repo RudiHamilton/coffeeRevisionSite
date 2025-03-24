@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('group_flashcards', function (Blueprint $table) {
             $table->id('group_flashcard_id');
-            $table->foreignId('user_flashcard_id');
+            $table->foreignId('user_flashcard_id'); // SET TO UNIQUE WHEN DEV
             $table->string('name');
             $table->text('description');
+            $table->boolean('visibility');
             $table->timestamps();
         });
     }
