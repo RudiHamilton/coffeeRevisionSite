@@ -23,9 +23,9 @@
                         <div class="back">
                             Answer: {{$singleFlashcard->answer}}
                             <div class="buttons" style="position:absolute;">
-                                {{-- <a href="{{route('')}}" style="background-color: #2C3E50 !important; height: 40px; position:bottom;" class="btn btn-dark float m-2">Edit</a> --}}
+                                <a href="{{url('flashcards/singleflashcard/'.$singleFlashcard->single_flashcard_id.'/edit')}}" style="background-color: #2C3E50 !important; height: 40px; position:bottom;" class="btn btn-dark float m-2">Edit</a>
                                 <a href="{{url('flashcards/'.$singleFlashcard->single_flashcard_id.'/delete')}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">Delete</a>
-    
+                                
                             </div>
                             </p>
                         </div>

@@ -26,13 +26,13 @@ class FlashcardsController extends Controller
 
         $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
             $query->where('user_id', $userId);
-        })->get();
+        })->orderBy('group_flashcard_id','asc')->get();
         
         return view('flashcards.viewgroupflashcards', compact('groupFlashcards'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource.s
      */
     public function createflashcardgroup()
     {
@@ -80,7 +80,7 @@ class FlashcardsController extends Controller
     {
         $singleFlashcards =  SingleFlashcard::whereHas('groupFlashcard', function ($query) use ($group_flashcard_id) {
             $query->where('group_flashcard_id', $group_flashcard_id);
-        })->get();
+        })->orderBy('single_flashcard_id','asc')->get();
         $groupFlashcardName = GroupFlashcard::find($group_flashcard_id)->name;
         $findingGroupFlashcardId = GroupFlashcard::find($group_flashcard_id)->group_flashcard_id;
 
@@ -91,24 +91,42 @@ class FlashcardsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function editGroup(string $id)
+    public function editGroup($group_flashcard_id)
     {
-        //
+        $groupFlashcard = GroupFlashcard::find($group_flashcard_id);
+        return view('flashcards.editgroupflashcard',compact('groupFlashcard'));
+
     }
-    public function editSingle(string $id)
+    public function editSingle($singleFlashcard)
     {
-        //
+        $singleFlashcard = SingleFlashcard::find($singleFlashcard);
+        return view('flashcards.editsingleflashcard',compact('singleFlashcard'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function updateGroup(Request $request, string $id)
+    public function updateGroup(Request $request,$group_flashcard_id)
     {
-        //
+        $groupFlashcard = GroupFlashcard::find($group_flashcard_id);
+        $request = [
+            'name'=> $request->name,
+            'description' =>$request->description,
+        ];
+        $groupFlashcard->update($request);
+        return redirect()->route('flashcards.index')->with('success','Flashcard Group Updated Successfully.');
     }
-    public function updateSingle(Request $requestm,string $id){
+    public function updateSingle(Request $request,$single_flashcard_id){
+        $singleFlashcard = SingleFlashcard::find($single_flashcard_id);
+        $request = [
+            'name'=> $request->name,
+            'question' =>$request->question,
+            'answer'=>$request->answer,
 
+        ];
+        $singleFlashcard->update($request);
+        $groupFlashcardId = SingleFLashcard::where('single_flashcard_id',$single_flashcard_id)->value('group_flashcard_id');
+        return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
     }
     
 
@@ -124,7 +142,7 @@ class FlashcardsController extends Controller
         $flashcard = SingleFlashcard::find($single_flashcard_id);
         $groupFlashcardId = SingleFLashcard::where('single_flashcard_id',$single_flashcard_id)->value('group_flashcard_id');
         $flashcard->delete();
-        return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Permission deleted successfully');
+        return redirect()->to('flashcards/show/'.$groupFlashcardId)->with('status','Single Flashcard deleted successfully');
     }
 }
 

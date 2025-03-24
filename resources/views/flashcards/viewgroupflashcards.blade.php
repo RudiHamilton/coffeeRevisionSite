@@ -12,7 +12,7 @@
                 <p class="m-2">
                 {{$groupFlashcard->description}}<br><br><br>
                 <a href="{{url('flashcards/show/'.$groupFlashcard->group_flashcard_id)}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">View</a>
-                <a href="{{url('flashcards/show/'.$groupFlashcard->group_flashcard_id)}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">Edit</a>
+                <a href="{{url('flashcards/groupflashcard/'.$groupFlashcard->group_flashcard_id.'/edit')}}" style="background-color: #2C3E50 !important; height: 40px;" class="btn btn-dark float m-2">Edit</a>
                 </p>
             </x-group-flashcards>
         </a>

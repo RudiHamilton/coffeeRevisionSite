@@ -12,11 +12,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('home');
 })->name('home');
-Route::get('flashcards/{single_flashcard_id}/delete',[FlashcardsController::class,'destroySingle']);
-Route::get('flashcards/show/{single_flashcards_id}',[FlashcardsController::class,'show'])->name('showsingleflashcards');
 
-Route::get('flashcards/groupflashcards/create',[FlashcardsController::class,'createflashcardgroup']);
-Route::get('flashcards/singleflashcards/create/{group_flashcard_id}',[FlashcardsController::class,'createflashcardsingle'])->name('createflashcardsingle');
+
+Route::prefix('flashcards')->group(function () {
+    Route::get('{single_flashcard_id}/delete',[FlashcardsController::class,'destroySingle']);
+
+    Route::get('singleflashcard/{single_flashcard_id}/edit',[FlashcardsController::class,'editSingle'])->name('editSingle');
+    Route::get('groupflashcard/{group_flashcard_id}/edit',[FlashcardsController::class,'editGroup'])->name('editGroup');
+
+    Route::put('singleflashcard/{single_flashcard_id}',[FlashcardsController::class,'updateSingle'])->name('updateSingle');
+    Route::put('groupflashcard/{group_flashcard_id}',[FlashcardsController::class,'updateGroup'])->name('updateGroup');
+
+    Route::get('show/{single_flashcards_id}',[FlashcardsController::class,'show'])->name('showsingleflashcards');
+
+    Route::get('groupflashcards/create',[FlashcardsController::class,'createflashcardgroup']);
+    Route::get('singleflashcards/create/{group_flashcard_id}',[FlashcardsController::class,'createflashcardsingle'])->name('createflashcardsingle');
+});
+
 
 Route::post('createflashcardgroup/store',[FlashcardsController::class,'storeGroup'])->name('storeGroup');
 Route::post('createflashcardsingle/store/{group_flashcard_id}',[FlashcardsController::class,'storeSingle'])->name('storeSingle');
@@ -30,9 +42,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Route::get('/home', function () {
-//     return view('home');
-// })->name('home');
 
 Route::get('permissions/{id}/delete',[PermissionController::class,'destroy'])->middleware('role:super-admin');
 Route::resource('permissions', PermissionController::class)->middleware('role:super-admin');
