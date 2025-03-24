@@ -104,6 +104,21 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('leaderboard.index')" :active="request()->routeIs('leaderboard.index')">
+                {{ __('Leaderboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('pomodoro.index')" :active="request()->routeIs('pomodoro.index')">
+                {{ __('Pomodoro Timer') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('revisiontimeline.index')" :active="request()->routeIs('revisiontimeline.index')">
+                {{ __('Revision Timeline') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('flashcards.index')" :active="request()->routeIs('flashcards.index')">
+                {{ __('Flashcards') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
