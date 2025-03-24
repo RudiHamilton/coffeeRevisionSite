@@ -1,0 +1,13 @@
+.border-indigo-400,
+.border-indigo-700 {
+    border-color: #F1D2B1;
+}
+.btn{
+    background-color:#F1D2B1;
+    border-color:#F1D2B1;
+    color: black;
+}
+.btn:hover{
+    background-color:#F1D2B1;
+    border-color:#F1D2B1;
+}
