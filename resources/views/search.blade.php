@@ -22,7 +22,9 @@
                         <p class="m-2">Private</p>
                     @endif<br><br>
                     <a href="{{url('flashcards/show/'.$groupFlashcard->group_flashcard_id)}}" style="!important; height: 40px;" class="btn float m-2">View</a>
-                    <a href="{{url('flashcards/groupflashcard/'.$groupFlashcard->group_flashcard_id.'/edit')}}" style="!important; height: 40px;" class="btn float m-2">Edit</a>
+                    @if($groupFlashcard->user_flashcard_id == $findingActiveUserFlashcardId)
+                        <a href="{{url('flashcards/groupflashcard/'.$groupFlashcard->group_flashcard_id.'/edit')}}" style="!important; height: 40px;" class="btn float m-2">Edit</a>
+                    @endif
                 </p>
                 </x-group-flashcards>
             </a>

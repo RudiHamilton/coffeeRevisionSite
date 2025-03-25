@@ -7,6 +7,7 @@ namespace App\Services;
 
 use App\Models\GroupFlashcard;
 
+
 class SearchDatabaseService{
     public function search($query){
         $params = [
@@ -16,6 +17,7 @@ class SearchDatabaseService{
         $groupFlashcards = GroupFlashcard::where($params)
             ->orderBy('created_at','asc')
             ->get();
+        
         return $groupFlashcards;
     }
 }
