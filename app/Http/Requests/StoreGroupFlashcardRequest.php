@@ -23,7 +23,7 @@ class StoreGroupFlashcardRequest extends FormRequest
     {
         return [
             'name' => 'min:2|max:100|required',
-            'description'=> 'min:6|max:500|required'
+            'description'=> 'min:6|max:500|required',
         ];
     }
 }

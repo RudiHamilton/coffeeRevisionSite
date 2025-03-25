@@ -18,31 +18,35 @@
     <div class="study-items">
             <div class="card">
                 <a href="{{route('leaderboard.index')}}">
-                    <h4 class="h4">Leaderboard</h4>
+                    
                     <img src="" alt="">
+                    <h4 class="h4">Leaderboard</h4>
                 </a>
             </div>
         <a href="">
             <div class="card">
                 <a href="{{route('pomodoro.index')}}">
-                    <h4 class="h4">Pomodoro</h4>
+                    
                     <img class="img" src="{{asset('images/pomodoro3.png')}}" alt="">
+                    <h4 class="h4">Pomodoro</h4>
                 </a>
             </div>
         </a>
         <a href="">
         <div class="card">
             <a href="{{route('revisiontimeline.index')}}">
-                <h4 class="h4">Revision Timeline</h4>
+                
                 <img class="img" src="{{asset('images/RevisionTimetable.png')}}" alt="">
+                <h4 class="h4">Revision Timeline</h4>
             </a>
         </div>
         </a>
         <a href="">
             <div class="card">
                 <a href="{{route('flashcards.index')}}">
-                    <h4 class="h4">Flashcards</h4>
+                    
                     <img class="img" src="{{asset('images/Flashcards.png')}}" alt="">
+                    <h4 class="h4">Flashcards</h4>
                 </a>
             </div>
         </a>

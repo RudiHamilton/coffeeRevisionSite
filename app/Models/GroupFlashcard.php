@@ -14,6 +14,7 @@ class GroupFlashcard extends Model
         'user_flashcard_id',
         'name',
         'description',
+        'visibility',
     ];
     public function singleFlashcard(){
         return $this->hasMany(SingleFlashcard::class,'single_flashcard_id','single_flashcard_id');

@@ -53,9 +53,11 @@ class FlashcardsController extends Controller
         $userId = Auth::id();
         $userFlashcardId = UserFlashcard::where('user_id',$userId)->value('user_flashcard_id');
         $validated = $request->validated();
-        
+
+        $visibility = $request->has('visibility') ? (bool) $request->input('visibility') : false;
         GroupFlashcard::create(array_merge($validated, [
             'user_flashcard_id' => $userFlashcardId,
+            'visibility'=>$visibility,
         ]));
 
         return redirect()->route('flashcards.index')->with('success','Created Successfully');    

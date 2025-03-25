@@ -34,15 +34,15 @@ main{
     cursor:pointer;
 }
 .h4{
-    margin-top:20px;
+    margin-top:10px;
 }
 .img{
     border-radius:10px;
     height:75%;
     width:75%;
-    position:absolute;
-    bottom:0;
-    right:0;
+    margin:auto;
+    margin-top:15px;
+    top:0;
 
 }
 .btn{

@@ -7,10 +7,14 @@
     </x-slot>
     @forelse ($groupFlashcards as $groupFlashcard)
             <x-group-flashcards>
-                
                 <h4 class="h4 m-2">{{$groupFlashcard->name}}</h4> <br>
                 <p class="m-2">
-                {{$groupFlashcard->description}}<br><br><br>
+                {{$groupFlashcard->description}}<br>
+                @if($groupFlashcard->visibility == true)
+                    <p class="m-2">Public</p>
+                @else
+                    <p class="m-2">Private</p>
+                @endif<br><br>
                 <a href="{{url('flashcards/show/'.$groupFlashcard->group_flashcard_id)}}" style="!important; height: 40px;" class="btn float m-2">View</a>
                 <a href="{{url('flashcards/groupflashcard/'.$groupFlashcard->group_flashcard_id.'/edit')}}" style="!important; height: 40px;" class="btn float m-2">Edit</a>
                 </p>
