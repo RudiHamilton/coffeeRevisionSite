@@ -7,12 +7,14 @@ use App\Http\Controllers\PomodoroController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RevisionTimelineController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('search', [SearchController::class,'search'])->name('search');
 
 Route::prefix('flashcards')->group(function () {
     Route::get('{single_flashcard_id}/delete',[FlashcardsController::class,'destroySingle']);

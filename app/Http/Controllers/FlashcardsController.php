@@ -6,6 +6,7 @@ use App\Http\Requests\StoreGroupFlashcardRequest;
 use App\Http\Requests\StoreSingleFlashcardRequest;
 use App\Models\GroupFlashcard;
 use App\Models\SingleFlashcard;
+use App\Models\User;
 use App\Models\UserFlashcard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,18 +20,19 @@ class FlashcardsController extends Controller
     {
         $userId = Auth::id();
         $userFlashcardId = UserFlashcard::where("user_id",$userId)->value('user_flashcard_id');
-
+       
         if(empty($userFlashcardId)){
             UserFlashcard::create([
                 'user_id'=> $userId,
             ]);
         }
-
+        
         $groupFlashcards = GroupFlashcard::whereHas('userFlashcard', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->orderBy('group_flashcard_id','asc')->get();
-        
-        return view('flashcards.viewgroupflashcards', compact('groupFlashcards'));
+
+
+        return view('flashcards.viewgroupflashcards', compact('groupFlashcards','userFlashcardId'));
     }
 
     /**
@@ -75,14 +77,19 @@ class FlashcardsController extends Controller
      */
     public function show($group_flashcard_id)
     {
+        $userId = Auth::id();
+
+
         $singleFlashcards =  SingleFlashcard::whereHas('groupFlashcard', function ($query) use ($group_flashcard_id) {
             $query->where('group_flashcard_id', $group_flashcard_id);
         })->orderBy('single_flashcard_id','asc')->get();
         $groupFlashcardName = GroupFlashcard::find($group_flashcard_id)->name;
         $findingGroupFlashcardId = GroupFlashcard::find($group_flashcard_id)->group_flashcard_id;
+        $findingUserFlashcardId = GroupFlashcard::find($group_flashcard_id)->user_flashcard_id;
+        $findingActiveUserFlashcardId = UserFlashcard::where('user_id', $userId)->value('user_flashcard_id');
 
         
-        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId'));
+        return view('flashcards.showflashcards',compact('singleFlashcards','groupFlashcardName','findingGroupFlashcardId','findingUserFlashcardId','findingActiveUserFlashcardId'));
     }
 
     /**

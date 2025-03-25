@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
     <div class="card-body">
+        <p> welcome to the leaderboard. here is where you will compete against friends.
         <table class="table table-striped">
             <thead>
                 <tr>

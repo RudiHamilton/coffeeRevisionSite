@@ -8,7 +8,14 @@ namespace App\Services;
 use App\Models\GroupFlashcard;
 
 class SearchDatabaseService{
-    public function search(){
-        
+    public function search($query){
+        $params = [
+            ['name','ILIKE',"%{$query}%"],
+            ['visibility','=','true'],
+        ];
+        $groupFlashcards = GroupFlashcard::where($params)
+            ->orderBy('created_at','asc')
+            ->get();
+        return $groupFlashcards;
     }
 }

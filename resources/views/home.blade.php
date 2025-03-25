@@ -3,7 +3,12 @@
     <x-slot name="header">
     <div name="header" class="row">
         <div class="col"> <h2 class="mt-2 *:font-semibold text-xl text-gray-800 leading-tight">{{ __('Home') }}</h2></div>
-        <div class="col"> <x-search-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"/> </div>
+        <div class="col">
+            <form action="{{route('search')}}" method="GET">
+                @csrf
+                <x-search-input id="search" class="block mt-1 w-full" type="text" name="search" :value="old('name')" required autofocus autocomplete="name"/> 
+            </form>
+        </div>
     </div>
     </x-slot>
     <div class="card-body">
