@@ -16,6 +16,7 @@
             <tbody>
                 @foreach($users as $user)
                 <tr>
+                    <td><img style ="width:50px; height:50px; margin-right: 10px;" class="image rounded-circle" src="{{$user->profile_picture}}" alt=""></td>
                     <td>{{$user->username}}</td>
                     <td>{{$user->mmr ? $user->mmr->mmr_number:'N/A'}}</td>
                     <td>{{$user->mmr && $user->mmr->rank ? $user->mmr->rank->rank:'unranked'}}</td>

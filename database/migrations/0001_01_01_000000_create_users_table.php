@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile_picture')->default('storage/app/public/defaultpfp/default.png');
+            $table->string('profile_picture')->default('storage/defaultpfp/default.png');
             $table->text('profile_bio')->nullable();
             $table->rememberToken();
             $table->softDeletes();

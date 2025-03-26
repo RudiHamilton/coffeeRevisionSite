@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             'username'=>'eski',
             'email' => 'rudihamilton11@outlook.com',
             'password' => Hash::make('password'),
+            'profile_picture'=>'storage/userpfp/icegod.jpg',
             'created_at'=> now(),
             'updated_at'=> now(),
         ]);
