@@ -57,7 +57,9 @@ class LeaderboardController extends Controller
             ->select('users.*', 'm_m_r_s.mmr_number') // Select necessary fields
             ->get();
 
-        return view('leaderboard', compact('users', 'userRank'));
+        $users = $users->unique('user_id');
+
+        return view('leaderboard',compact('users', 'userRank'));
     }
 
     /**

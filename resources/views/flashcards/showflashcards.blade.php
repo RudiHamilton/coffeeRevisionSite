@@ -18,7 +18,7 @@
                 <div class="container">
                     <x-single-flashcards>
                         <div class="front">
-                            <h4 class="h4 m-2">{{$singleFlashcard->name}}</h4>
+                            <h5 class="h5 m-2">{{$singleFlashcard->name}}</h5>
                             <p class="m-2">
                             Question: <br>{{$singleFlashcard->question}} 
                         </div>
