@@ -9,15 +9,22 @@ use App\Models\GroupFlashcard;
 
 
 class SearchDatabaseService{
-    public function search($query){
-        $params = [
-            ['name','ILIKE',"%{$query}%"],
-            ['visibility','=','true'],
-        ];
-        $groupFlashcards = GroupFlashcard::where($params)
-            ->orderBy('created_at','asc')
+    public function search($searchText){
+        $flashcardsByName = GroupFlashcard::where('name', 'ILIKE', "%{$searchText}%")
+            ->where('visibility', true)
+            ->with('category')
+            ->orderBy('created_at', 'asc')
             ->get();
-        
-        return $groupFlashcards;
+
+        $flashcardsByCategory = GroupFlashcard::whereHas('category', function ($query) use ($searchText) {
+                $query->where('category', 'ILIKE', "%{$searchText}%");
+            })
+            ->where('visibility', true)
+            ->with('category')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        $allFlashcards = $flashcardsByName->merge($flashcardsByCategory)->unique('group_flashcard_id');
+        return $allFlashcards;
     }
 }

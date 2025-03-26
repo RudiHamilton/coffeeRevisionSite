@@ -35,8 +35,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RevisionTaskSeeder::class);
         $this->call(TimeWorkedSeeder::class);
         $this->call(UserFlashcardSeeder::class);
+        $this->call(CategorySeeder::class);
         $this->call(GroupFlashcardSeeder::class);
         $this->call(SingleFlashcardSeeder::class);
         $this->call(RolesAndPermissionsSeeder::class);
+  
     }
 }

@@ -24,7 +24,17 @@
                     </div><br>
 
                     <div>
-                        <div><x-input-label for="visibility" :value="__('Visibility')" /></div><br>
+                        <x-input-label for="description" :value="__('Description')" />
+                        <select name="category_id" id="category_id" class="select">
+                            @foreach($categories as $category)
+                                <option value="{{$category->category_id}}">{{$category->category}}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                    </div><br>
+
+                    <div>
+                        <div><x-input-label for="visibility" :value="__('Visibility')" /></div>
                             <div class="parent">
                                 <div><x-input-label for="visibility" :value="__('Private')" /></div>
                                 <label class="switch">

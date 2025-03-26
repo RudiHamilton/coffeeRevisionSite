@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div name="header" class="row">
-            <div class="col"> <h2 class="mt-2 *:font-semibold text-xl text-gray-800 leading-tight">{{ __('Home') }}</h2></div>
+            <div class="col"> <h2 class="mt-2 *:font-semibold text-xl text-gray-800 leading-tight">{{ __('Search Flashcards') }}</h2></div>
             <div class="col">
                 <form action="{{route('search')}}" method="GET">
                     @csrf
@@ -29,7 +29,10 @@
                 </x-group-flashcards>
             </a>
         @empty
-            <h2 class="m-5">You have no flashcard groups yet! Dont worry press the create button to get started.</h2>
+        <div class="card-body" style=" display: flex;">
+            <div style="flex:3;"><h2 class="h5 m-5">Sorry we couldnt find any flashcards based on your search why dont you try making some!</h2></div>
+            <div style="flex:1; margin-right:150px;"><a  class="btn btn-primary float-end m-5" href="{{ url(path: 'flashcards/groupflashcards/create')}}">Create Flashcard Group +</a></div>
+        </div>
         @endforelse
     </div>
 </x-app-layout>

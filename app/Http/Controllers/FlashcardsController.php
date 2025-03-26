@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGroupFlashcardRequest;
 use App\Http\Requests\StoreSingleFlashcardRequest;
+use App\Models\Category;
 use App\Models\GroupFlashcard;
 use App\Models\SingleFlashcard;
 use App\Models\User;
@@ -40,7 +41,9 @@ class FlashcardsController extends Controller
      */
     public function createflashcardgroup()
     {
-        return view('flashcards.createflashcardgroup');
+        $categories = Category::get(['category_id','category']);
+
+        return view('flashcards.createflashcardgroup',compact('categories'));
     }
     public function createflashcardsingle($groupFlashcardId)
     {   
@@ -55,9 +58,12 @@ class FlashcardsController extends Controller
         $userId = Auth::id();
         $userFlashcardId = UserFlashcard::where('user_id',$userId)->value('user_flashcard_id');
         $validated = $request->validated();
-
+        $category_id = $request->category_id;
+        
         $visibility = $request->has('visibility') ? (bool) $request->input('visibility') : false;
+
         GroupFlashcard::create(array_merge($validated, [
+            'category_id'=>$category_id,
             'user_flashcard_id' => $userFlashcardId,
             'visibility'=>$visibility,
         ]));

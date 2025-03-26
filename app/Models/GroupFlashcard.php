@@ -12,6 +12,7 @@ class GroupFlashcard extends Model
     protected $primaryKey = 'group_flashcard_id';
     protected $fillable = [
         'user_flashcard_id',
+        'category_id',
         'name',
         'description',
         'visibility',
@@ -22,5 +23,8 @@ class GroupFlashcard extends Model
     public function userFlashcard()
     {
         return $this->belongsTo(UserFlashcard::class, 'user_flashcard_id', 'user_flashcard_id');
+    }
+    public function category(){
+        return $this->belongsTo(Category::class,'category_id','category_id');
     }
 }

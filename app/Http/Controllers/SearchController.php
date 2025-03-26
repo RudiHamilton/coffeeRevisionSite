@@ -14,9 +14,9 @@ class SearchController extends Controller
     public function __construct(private SearchDatabaseService $searchDatabaseService){
     }
     public function search(Request $request){
-        $query = $request->search;
+        $searchText = $request->search;
 
-        $groupFlashcards = $this->searchDatabaseService->search($query);
+        $groupFlashcards = $this->searchDatabaseService->search($searchText);
 
         $userId = Auth::id();
 

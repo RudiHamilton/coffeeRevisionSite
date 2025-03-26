@@ -1,4 +1,5 @@
 <x-app-layout>
+    <link rel="stylesheet" href="{{asset('leaderboard.css')}}">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Leaderboard') }}
@@ -24,5 +25,30 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="stage">
+            <div class="stage-front">
+                Leaderboard
+            </div>
+            <div class="tower third">
+                <div class="face front"></div>
+                <div class="face right"></div>
+                <div class="face top">
+                    <div class="player">Player 3</div>
+                </div>
+            </div>
+            <div class="tower first">
+                <div class="face front"></div>
+                <div class="face top">
+                    <div class="player">Player 1</div>
+                </div>
+            </div>
+            <div class="tower second">
+                <div class="face front"></div>
+                <div class="face left"></div>
+                <div class="face top">
+                    <div class="player">Player 2</div>
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>
